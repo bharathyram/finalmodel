@@ -1,0 +1,429 @@
+ 
+
+
+public partial class Admin
+    {
+
+        [DisplayName("Admin ID")]
+        [Required(ErrorMessage = "Please enter the Admin ID")]
+        public string AdminId { get; set; }
+
+        [DisplayName("Admin Name")]
+        [Required(ErrorMessage = "Please enter the AdminName.")]
+        public string AdminName { get; set; }
+
+
+        [Required(ErrorMessage = "Please enter the Password.")]
+        [DataType(DataType.Password)]
+        [StringLength(8, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        public string Password { get; set; }
+
+
+        [Required(ErrorMessage = "Please enter the ConfirmPassword.")]
+        [StringLength(8, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [DataType(DataType.Password)]
+        [Compare("Password")]
+        public string ConfirmPassword { get; set; }
+                    
+           }
+}
+
+
+
+-------------------------------------------------------------------------------------
+
+ public partial class AdminLogin
+    {
+
+
+        [Required(ErrorMessage = "Please enter the Admin UserName.")]
+        public string UserName { get; set; }
+
+
+        [Required(ErrorMessage = "Please enter the Password.")]
+        [DataType(DataType.Password)]
+        [StringLength(8, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        public string Password { get; set; }
+
+
+        
+    }
+}
+
+
+-------------------------------
+public partial class Booking
+    {
+
+        [Required(ErrorMessage = "Enter Booking ID")]
+        public int BookingID { get; set; }
+
+
+        [DisplayName("Customer ID")]
+        [Required(ErrorMessage = "Enter Customer ID")]
+        public Nullable<int> CustomerID { get; set; }
+
+
+        [DisplayName("Taxi ID")]
+        [Required(ErrorMessage = "Enter Taxi ID")]
+        public Nullable<int> TaxiId { get; set; }
+
+        [DisplayName("Pick Up Address")]
+        [Required(ErrorMessage = "Required Field")]
+        public string SourceAddress { get; set; }
+
+
+        [DisplayName("Drop Up Address")]
+        [Required(ErrorMessage = "Required Field")]
+        public string DestinationAddress { get; set; }
+
+
+
+
+
+        [DisplayName("Trip Date")]
+        [Required(ErrorMessage = "Enter the Start Date for Travel")]
+        [DataType(DataType.Date)]
+        public System.DateTime TripDate { get; set; }
+
+
+        [DisplayName("Trip Time")]
+        [Required(ErrorMessage = "Enter the Time to start the Travel")]
+        [DataType(DataType.Time)]
+        public System.TimeSpan TripTime { get; set; }
+
+
+        
+        [DisplayName("Return Date")]
+        [Required(ErrorMessage = "Enter the Return Date for Travel")]
+        [DataType(DataType.Date)]
+        public System.DateTime ReturnDate { get; set; }
+
+
+        
+
+
+        [DisplayName("End Time")]
+        [Required(ErrorMessage = "Enter the Time to start the Travel")]
+        [DataType(DataType.Time)]
+        public System.TimeSpan ReturnTime { get; set; }
+
+
+
+
+
+        [DisplayName("Passenger")]
+        [Required(ErrorMessage = "Enter Passenger like Adults or children")]     
+        public string Passenger { get; set; }
+
+        [DisplayName("Comments")]
+        [Required(ErrorMessage = "Enter Comments to get additional facilities in the taxi")]
+        public string Comments { get; set; }
+
+
+
+        [DisplayName("Email ID")]
+        [Required(ErrorMessage = "Required Field")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+
+        public string EmailID { get; set; }
+
+        [DisplayName("Phone Number")]
+        [DataType(DataType.MobileNumber)]
+        [Required(ErrorMessage = "Required Field")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid PhoneNumber.")]
+        public Nullable<long> MobileNumber { get; set; }
+
+        [DisplayName("Status")]
+        [Required(ErrorMessage = "Enter Status")]
+        public string Status { get; set; }
+    
+        public virtual Customer Customer { get; set; }
+        public virtual Taxi Taxi { get; set; }
+    }
+}
+
+========================
+public partial class Customer
+    {
+        public Customer()
+        {
+            this.Bookings = new HashSet<Booking>();
+            this.Users = new HashSet<User>();
+        }
+
+
+        [DisplayName("Customer ID")]
+        [Required(ErrorMessage = "Required Field")]
+        public int CustomerID { get; set; }
+
+
+        [DisplayName("Customer Name")]
+        [Required(ErrorMessage = "Required Field")]
+        public string CustomerName { get; set; }
+
+
+        [DisplayName("Mobile Number")]
+        [Required(ErrorMessage = "Required Field")]
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid Mobile Number.")]
+        public long PhoneNumber { get; set; }
+
+
+        [Required(ErrorMessage = "Required Field")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        public string EmailID { get; set; }
+
+
+        [Required(ErrorMessage = "Required Field")]
+        public string Address { get; set; }
+
+
+        [Required(ErrorMessage = "Required Field")]
+        [DataType(DataType.Password)]
+        public string password { get; set; }
+
+
+        [DisplayName("Confirm Password")]
+        [Required(ErrorMessage = "Required Field")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Password doesn't match.")]
+        public string confirmPassword { get; set; }
+
+
+        
+        public virtual ICollection<Booking> Bookings { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+    }
+}
+========================================
+ public partial class CustomerLogin
+    {
+
+        [Required(ErrorMessage = "Please enter the Customer UserName.")]
+        public string UserName { get; set; }
+
+
+        [Required(ErrorMessage = "Please enter the Password.")]
+        [DataType(DataType.Password)]
+        [StringLength(8, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        public string Password { get; set; }
+
+        
+    }
+}
+********************************
+ public partial class Employee
+    {
+        public Employee()
+        {
+            this.EmployeeRosters = new HashSet<EmployeeRoster>();
+            this.Users = new HashSet<User>();
+        }
+
+        [DisplayName("Employee ID")]
+        [Required(ErrorMessage = "Required Field")]
+        public int EmployeeID { get; set; }
+
+        [DisplayName("Employee Name")]
+        [Required(ErrorMessage = "Required Field")]
+        public string EmployeeName { get; set; }
+
+        [DisplayName("Age")]
+        [Required(ErrorMessage = "Required Field")]
+        public int Age { get; set; }
+
+        [DisplayName("Qualification")]
+        [Required(ErrorMessage = "Required Field")]
+        public string Qualification { get; set; }
+
+        [DisplayName("BloodGroup")]
+        [Required(ErrorMessage = "Required Field")]
+        public string BloodGroup { get; set; }
+
+        [DisplayName("Designation")]
+        [Required(ErrorMessage = "Required Field")]
+        public string Designation { get; set; }
+
+        [DisplayName("Phone Number")]
+        [DataType(DataType.PhoneNumber)]
+        [Required(ErrorMessage = "Required Field")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid PhoneNumber.")]
+        public long PhoneNumber { get; set; }
+
+        [DisplayName("Phone Number")]
+        [DataType(DataType.EmergencyContactNumber)]
+        [Required(ErrorMessage = "Required Field")]
+        [RegularExpression(@"^([0-9]{10})$", ErrorMessage = "Invalid PhoneNumber.")]
+        public Nullable<long> EmergencyContactNumber { get; set; }
+
+        [DisplayName("Emergency Contact Person")]
+        [Required(ErrorMessage = "Required Field")]
+        public string EmergencyContactPerson { get; set; }
+
+
+        [DisplayName("Email ID")]
+        [Required(ErrorMessage = "Required Field")]
+        [EmailAddress(ErrorMessage = "Invalid email address.")]
+        public string EmailID { get; set; }
+
+        [DisplayName("Address")]
+        [Required(ErrorMessage = "Required Field")]
+        public string Address { get; set; }
+
+        [DisplayName("City")]
+        [Required(ErrorMessage = "Required Field")]
+        public string City { get; set; }
+
+        [DisplayName("Dirving License Number")]
+        [Required(ErrorMessage = "Required Field")]
+        public string DrivingLicenseNumber { get; set; }
+
+        [DisplayName("Date Of Joining")]
+        [Required(ErrorMessage = "Enter the Date Of Joining")]
+        [DataType(DataType.Date)]
+        public Nullable<System.DateTime> DateOfJoining { get; set; }
+
+        [DisplayName("MaritalStatus")]
+        [Required(ErrorMessage = "Required Field")]
+        public string MaritalStatus { get; set; }
+
+        [DisplayName("Experience")]
+        [Required(ErrorMessage = "Required Field")]
+        public string Experience { get; set; }
+
+        [DisplayName("Password")]
+        [Required(ErrorMessage = "Required Field")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [DisplayName("Confirm Password")]
+        [Required(ErrorMessage = "Required Field")]
+        [DataType(DataType.Password)]
+        [Compare("Password", ErrorMessage = "Password doesn't match.")]
+        public string ConfirmPassword { get; set; }
+    
+        public virtual ICollection<EmployeeRoster> EmployeeRosters { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+    }
+}
+
+###############################################3
+ public partial class EmployeeLogin
+    {
+        [Required(ErrorMessage = "Please enter the Employee UserName.")]
+        public string UserName { get; set; }
+
+
+        [Required(ErrorMessage = "Please enter the Password.")]
+        [DataType(DataType.Password)]
+        [StringLength(8, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        public string Password { get; set; }
+
+    }
+}
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$44
+public partial class EmployeeRoster
+    {
+        [DisplayName("Roster ID")]
+        [Required(ErrorMessage = "Required Field")]
+        public int RosterID { get; set; }
+
+
+        [DisplayName("Employee ID")]
+        [Required(ErrorMessage = "Required Field")]
+        public int EmployeeId { get; set; }
+
+
+        [DisplayName("From Date")]
+        [Required(ErrorMessage = "Required Field")]
+        [DataType(DataType.Date)]
+        public System.DateTime FromDate { get; set; }
+
+
+        [DisplayName("To Date")]
+        [Required(ErrorMessage = "Required Field")]
+        [DataType(DataType.Date)]
+        public System.DateTime ToDate { get; set; }
+
+
+        [DisplayName("In Time")]
+        [Required(ErrorMessage = "Required Field")]
+        [DataType(DataType.Time)]
+        public System.TimeSpan InTime { get; set; }
+
+
+        [DisplayName("Out Time")]
+        [Required(ErrorMessage = "Required Field")]
+        [DataType(DataType.Time)]
+        public System.TimeSpan OutTime { get; set; }
+
+    
+        public virtual Employee Employee { get; set; }
+    }
+}
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@2
+  public partial class Taxi
+    {
+        public Taxi()
+        {
+            this.Bookings = new HashSet<Booking>();
+        }
+
+
+        [DisplayName("Taxi ID")]
+        [Required(ErrorMessage = "Required Field")]
+        public int TaxiID { get; set; }
+
+
+        [DisplayName("Taxi Model")]
+        [Required(ErrorMessage = "Required Field")]
+        public string TaxiModel { get; set; }
+
+
+        [DisplayName("Color")]
+        [Required(ErrorMessage = "Required Field")]
+        public string Color { get; set; }
+
+
+        [DisplayName("Registration Number")]
+        [Required(ErrorMessage = "Required Field")]
+        public string RegistrationNumber { get; set; }
+
+
+        [DisplayName("Taxi Type")]
+        [Required(ErrorMessage = "Required Field")]
+        public string TaxiType { get; set; }
+
+
+        
+    
+        public virtual ICollection<Booking> Bookings { get; set; }
+    }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+public partial class User
+    {
+        [Required(ErrorMessage = "Please enter the Login Id.")]
+        public int LoginID { get; set; }
+
+        [DisplayName("Password")]
+        [Required(ErrorMessage = "Required Field")]
+        [DataType(DataType.Password)]
+        public string Password { get; set; }
+
+        [DisplayName("Employee ID")]
+        [Required(ErrorMessage = "Required Field")]
+        public Nullable<int> EmployeeID { get; set; }
+
+        [DisplayName("Customer ID")]
+        [Required(ErrorMessage = "Required Field")]
+        public int CustomerID { get; set; }
+
+    
+        public virtual Customer Customer { get; set; }
+        public virtual Employee Employee { get; set; }
+    }
+
+
